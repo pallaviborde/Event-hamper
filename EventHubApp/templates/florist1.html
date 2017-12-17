@@ -1,0 +1,322 @@
+{% load static %}
+<!-- Customize styles -->
+<link rel="stylesheet" type="text/css" href="{% static 'events/style.css' %}" />
+<!-- Bootstrap styles -->
+<link rel="stylesheet" href="{% static 'events/assets/css/bootstrap.css' %}" />
+<!-- font awesome styles -->
+<link rel="stylesheet" href="{% static 'events/assets/font-awesome/css/font-awesome.css' %}" />
+<!-- Favicons -->
+<link rel="shortcut icon" href="{% static 'events/assets/ico/favicon.ico' %}" />
+
+<head>
+    <meta charset="utf-8">
+    <title>EventHamper</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+		<!--[if IE 7]>
+			<link href="css/font-awesome-ie7.min.css" rel="stylesheet">
+		<![endif]-->
+
+		<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+  </head>
+<body>
+<!-- 
+	Upper Header Section 
+-->
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="topNav">
+		<div class="container">
+			<div class="alignR">
+				<div class="pull-left socialNw">
+					<a href="#"><span class="icon-twitter"></span></a>
+					<a href="#"><span class="icon-facebook"></span></a>
+					<a href="#"><span class="icon-youtube"></span></a>
+					<a href="#"><span class="icon-tumblr"></span></a>
+				</div>
+				<a class="active" href="index.html"> <span class="icon-home"></span> Home</a> 
+				<a href="#"><span class="icon-user"></span> My Account</a> 
+				<a href="register.html"><span class="icon-edit"></span> Register </a> 
+				<a href="contact.html"><span class="icon-envelope"></span> Contact us</a>
+				<a href="cart.html"><span class="icon-shopping-cart"></span> 0 Item(s) - <span class="badge badge-warning"> &#8377;0.0</span></a>
+			</div>
+		</div>
+	</div>
+</div>
+<!--
+Lower Header Section 
+-->
+<div class="container">
+<div id="gototop"> </div>
+<header id="header">
+<div class="row">
+	<div class="span4">
+	<h1>
+	<a class="logo" href="http://localhost:8000/home"><span>EventHub</span> 
+		<img src="{% static "events/assets/img/logo.png" %}" alt="EventHub Logo">
+	</a>
+	</h1>
+	</div>
+	<div class="span4">
+	<div class="offerNoteWrapper">
+	<h1 class="dotmark">
+	<i class="icon-cut"></i>
+	Event Planning is now available @ &#8377;149
+	</h1>
+	</div>
+	</div>
+	<div class="span4 alignR">
+	<p><br> <strong id="textColor"> Support (24/7) :  0000 1234 000 </strong><br><br></p>
+	<span class="btn btn-mini">[ 0 ] <span class="icon-shopping-cart"></span></span>
+	<span class="btn btn-warning btn-mini">&#8377;</span>
+	</div>
+</div>
+</header>
+<!--
+Navigation Bar Section 
+-->
+<div class="navbar">
+	  <div class="navbar-inner" style="padding-right:0px">
+		<div class="container">
+		  <a data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		  </a>
+		  <div class="nav-collapse">
+			<ul class="nav">
+			  <li class="active"><a href="http://localhost:8000/home">Home</a></li>
+			  <li class=""><a href="list-view.html">List View</a></li>
+			  <li class=""><a href="grid-view.html">Grid View</a></li>
+			  <li class=""><a href="three-col.html">Three Column</a></li>
+			  <li class=""><a href="four-col.html">Four Column</a></li>
+			  <li class=""><a href="general.html">General Content</a></li>
+			</ul>
+			<form action="#" class="navbar-search pull-left">
+			  <input type="text" placeholder="Search" class="search-query span2" style="padding:14px 14px">
+			</form>
+			<ul class="nav pull-right">
+			<li class="dropdown">
+				<a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="icon-lock"></span> Login <b class="caret"></b></a>
+				<div class="dropdown-menu">
+				<form class="form-horizontal loginFrm">
+				  <div class="control-group">
+					<input type="text" class="span2" id="inputEmail" placeholder="Email">
+				  </div>
+				  <div class="control-group">
+					<input type="password" class="span2" id="inputPassword" placeholder="Password">
+				  </div>
+				  <div class="control-group">
+					<label class="checkbox">
+					<input type="checkbox"> Remember me
+					</label>
+					<button type="submit" class="shopBtn btn-block">Sign in</button>
+				  </div>
+				</form>
+				</div>
+			</li>
+			</ul>
+		  </div>
+		</div>
+	  </div>
+	</div>
+<!-- 
+Body Section 
+-->
+	<div class="row">
+<div id="sidebar" class="span3">
+<div class="well well-small">
+	<ul class="nav nav-list">
+		{% block content %}
+            {% for category in categoryName %}
+              <li><a href="http://localhost:8000/{{ category.category_url }}"><span class="icon-chevron-right"></span>{{ category.category_name }}</a></li>
+              {% endfor %}
+        {% endblock %}
+	</ul>
+</div>
+<div class="well well-small alert alert-warning cntr">
+				  <h2>50% Discount</h2>
+				  <p> 
+					 only valid for today's online order. <br><a class="defaultBtn" href="#">Click here </a>
+				  </p>
+			  </div>
+			  <div class="well well-small" ><a href="#"><img src="{% static "events/assets/img/paypal.jpg" %}" alt="payment method paypal"></a></div>
+			
+			<a class="shopBtn btn-block" href="#">Upcoming services <br><small>Click to view</small></a>
+			<br>
+			<br>
+
+	</div>
+	<div class="span9">
+    <ul class="breadcrumb">
+    <li><a href="http://localhost:8000/home">Home</a> <span class="divider">/</span></li>
+    <li><a href="http://localhost:8000/florist">Florist</a> <span class="divider">/</span></li>
+    <li class="active">Preview</li>
+    </ul>	
+	<div class="well well-small">
+	<div class="row-fluid">
+			<div class="span5">
+			<div id="mymover" class="mover slide cntr">
+                <div class="mover-inner">
+                  <div class="item active">
+                   <a href="#"> <img src="{% static "events/assets/img/florist1_1.jpg" %}" alt="" style="width:100%"></a>
+                  </div>
+                  <div class="item">
+                     <a href="#"> <img src="{% static "events/assets/img/florist1_2.jpg" %}" alt="" style="width:100%"></a>
+                  </div>
+                  <div class="item">
+                    <a href="#"> <img src="{% static "events/assets/img/florist1_3.jpg" %}" alt="" style="width:100%"></a>
+                  </div>
+                </div>
+                <a class="left mover-control" href="#mymover" data-slide="prev">‹</a>
+                <a class="right mover-control" href="#mymover" data-slide="next">›</a>
+            </div>
+			</div>
+			<div class="span7">
+				<h3>Blush Blooms</h3>
+				<hr class="soft"/>
+				
+				<form class="form-horizontal qtyFrm">
+<!-- 				  <div class="control-group">
+					<label class="control-label"><span>$140.00</span></label>
+					<div class="controls">
+					<input type="number" class="span6" placeholder="Qty.">
+					</div>
+				  </div> -->
+				
+				  <div class="control-group">
+					<label class="control-label"><span>Type</span></label>
+					<div class="controls">
+					  <select class="span11">
+						  <option>Colorful Wrapped Bouquet</option>
+						  <option>Bright & Seasonal Smiles</option>
+						  <option>Soft And Feminine</option>
+						  <option>Designer's Choice</option>
+						  <option>Serene</option>
+						</select>
+					</div>
+				  </div>
+				  <div class="control-group">
+					<label class="control-label"><span>Flowers</span></label>
+					<div class="controls">
+					  <select class="span11">
+						  <option>Roses</option>
+						  <option>Daisies</option>
+						  <option>Lilis</option>
+						  <option>Tulips</option>
+						  <option>Delphinium</option>
+						</select>
+					</div>
+				  </div>
+				  <div class="control-group">
+					<label class="control-label"><span>Size</span></label>
+					<div class="controls">
+					  <select class="span11">
+						  <option>Standard</option>
+						  <option>Delux</option>
+						  <option>Premium</option>
+						</select>
+					</div>
+				  </div>
+				  <!-- <h4>100 items in stock</h4> -->
+				  <p>We will add more blooms and select the highest quality flowers we offer in this style</p>
+				  <button type="submit" class="shopBtn"><span class=" icon-shopping-cart"></span> Add to cart</button>
+				</form>
+			</div>
+			</div>
+				<hr class="softn clr"/>
+
+
+            <ul id="productDetail" class="nav nav-tabs">
+              <li class="active"><a href="#description" data-toggle="tab">Product Description</a></li>
+              <li class=""><a href="#product" data-toggle="tab">About the Product </a></li>
+			  <li class=""><a href="#us" data-toggle="tab">About Us </a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content tabWrapper">
+            <div class="tab-pane fade active in" id="description">
+			  <!-- <h4>Product Information</h4> -->
+				<p>This abundant bouquet of alstroemeria, known as Peruvian lilies, will add vibrant color to any room. This colorful bouquet contains 100 blooms of Peruvian Lilies, 4-6 blooms per stem. To allow these beautiful flowers to last much longer, they are shipped fresh, budding, and ready to bloom.Includes 100 blooms per bouquet, at least 17 stems of Peruvian lilies4-6 blooms per stemMeasures approximately 20" tallShips in custom ProFlowers packaging and gift box.</p>
+
+			</div>
+			<div class="tab-pane fade" id="product"> 
+			<ul>
+<li>Immediately upon arrival, remove flowers from box, cut stems, place in vase with fresh water and included flower food packet, and arrange flowers to your personal liking.</li>
+<li>Only from ProFlowers: Free clear glass vase included (may be different from picture).</li>
+<li>Flowers are shipped in bud form for optimal vase life; blooms will open in 2-3 days, as shown in product photo. Guaranteed fresh for 7 days or your money back.</li>
+<li>1 business day for processing. Overnight shipping to ensure freshness. No deliveries on Saturday, Sunday, or Monday.</li>
+<li>Observed holidays on Monday will delay delivery by one day.</li>
+</ul>
+			</div>
+			<div class="tab-pane fade" id="us">
+			<p>We offer outstanding professional service with a quality product and superior design. This has been our philosophy for over 50 years.
+Blush Blooms provides the highest standard of service to our customers. We have three convenient locations with the finest quality and largest selection of beautiful flowers, lush green and blooming plants, and elegant gifts for all occasions. Let Blush Blooms be your first choice for flowers.</p>
+
+			</div>
+		</div>
+        </div>
+
+</div>
+</div>
+</div>
+
+	
+<!--
+Footer
+-->
+<footer class="footer">
+<div class="row-fluid">
+<div class="span2">
+<h5>Your Account</h5>
+<a href="#">YOUR ACCOUNT</a><br>
+<a href="#">PERSONAL INFORMATION</a><br>
+<a href="#">ADDRESSES</a><br>
+<a href="#">DISCOUNT</a><br>
+<a href="#">ORDER HISTORY</a><br>
+ </div>
+<div class="span2">
+<h5>Information</h5>
+<a href="contact.html">CONTACT</a><br>
+<!--<a href="#">SITEMAP</a><br>-->
+<a href="#">LEGAL NOTICE</a><br>
+<a href="#">TERMS AND CONDITIONS</a><br>
+<a href="#">ABOUT US</a><br>
+ </div>
+<div class="span2">
+<h5>Our Offer</h5>
+<a href="#">NEW PRODUCTS</a> <br>
+<a href="#">TOP SELLERS</a><br>
+<a href="#">SPECIALS</a><br>
+<!--<a href="#">MANUFACTURERS</a><br>-->
+<a href="#">SUPPLIERS</a> <br/>
+ </div>
+ <div class="span6">
+<h5>Today's Thought</h5>
+Focus on the journey, not the destination. Joy is found not in finishing an activity but in doing it.
+<br>- Greg Anderson
+ </div>
+ </div>
+</footer>
+</div><!-- /container -->
+
+<div class="copyright">
+<div class="container" style="text-align:center; margin-top:5px;">
+	<p class="pull-right">
+		<a href="#"><img src="{% static "events/assets/img/maestro.png"%}" alt="payment"></a>
+		<a href="#"><img src="{% static "events/assets/img/mc.png"%}" alt="payment"></a>
+		<a href="#"><img src="{% static "events/assets/img/pp.png"%}" alt="payment"></a>
+		<a href="#"><img src="{% static "events/assets/img/visa.png"%}" alt="payment"></a>
+		<a href="#"><img src="{% static "events/assets/img/disc.png"%}" alt="payment"></a>
+	</p>
+	<span>Copyright &copy; 12/17/2017 Event Hamper</span>
+</div>
+</div>
+<a href="#" class="gotop"><i class="icon-double-angle-up"></i></a>
+   <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{% static "events/assets/js/jquery.js" %}"></script>
+	<script src="{% static "events/assets/js/bootstrap.min.js"%}"></script>
+	<script src="{% static "events/assets/js/jquery.easing-1.3.min.js"%}"></script>
+    <script src="{% static "events/assets/js/jquery.scrollTo-1.4.3.1-min.js"%}"></script>
+    <script src="{% static "events/assets/js/shop.js"%}"></script>
+</body>	  

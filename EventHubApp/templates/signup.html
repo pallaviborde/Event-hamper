@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+{% static '' as baseUrl %}
+{% block content %}
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+        <li class="active">Sign Up</li>
+    </ul>
+    <div class="well">
+    	<div class="messages">
+			{% if messages %}
+    			<ul class="messages">
+        			{% for message in messages %}
+            			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        			{% endfor %}
+    			</ul>
+			{% endif %}
+		</div>
+        <form action="{% url 'signupSubmit' %}" class="form-horizontal" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <h4>Personal Details</h4>
+
+            <div class="control-group">
+                <label class="control-label" for="inputFname">First name<sup>*</sup></label>
+                <div class="controls">
+                    <input type="text" id="inputFname" name="inputFname" placeholder="First Name" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputLname">Last name <sup>*</sup></label>
+                <div class="controls">
+                    <input type="text" id="inputLname" name="inputLname" placeholder="Last Name" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputEmail">Email <sup>*</sup></label>
+                <div class="controls">
+                    <input type="email" id="emailId" name="emailId" placeholder="Email" required>
+
+                </div>
+
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Username <sup>*</sup></label>
+                <div class="controls">
+                    <input type="text" id="username" name="username" placeholder="Username" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Password <sup>*</sup></label>
+                <div class="controls">
+                    <input type="password" id="passwd" name="passwd" placeholder="Password" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Street Address </label>
+                <div class="controls">
+                    <input type="text" id="street1" name="street1" placeholder="Street 1" required>
+                </div>
+                <br>
+                <div class="controls">
+                    <input type="text" id="street2" name="street2" placeholder="Street 2" required>
+                </div>
+                <br>
+                <div class="controls">
+                    <input type="text" id="city" name="city" placeholder="City" required>
+                </div>
+                <br>
+                <div class="controls">
+                    <input type="text" id="state" name="state" placeholder="State" required>
+                </div>
+                <br>
+                <div class="controls">
+                    <input type="text" id="country" name="country" placeholder="Country" required>
+                </div>
+                <br>
+                <div class="controls">
+                    <input type="number" id="pin_number" name="pin_number" placeholder="Pin code" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Phone <sup>*</sup></label>
+                <div class="controls">
+                    <input type="phone" id="phone" name="phone" placeholder="Phone" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button type="submit" class="shopBtn btn-block">Sign Up</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    {% endblock %}

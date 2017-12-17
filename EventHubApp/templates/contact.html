@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+    <ul class="breadcrumb">
+        <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+        <li class="active">Contact</li>
+    </ul>
+
+    <div class="well well-small">
+        <hr class="soften"/>
+        <div class="row-fluid">
+            <div class="span4 relative">
+                <div class="absoluteBlk" style="width:70%; margin-left: 10%">
+                    <!--<div class="well wellsmall"> -->
+                    <h4>Contact Details</h4>
+                    <h5>
+                        2711 N 1st St.<br/>
+                        San Jose, CA 95134<br/><br/>
+
+                        info@eventhamper.com<br/>
+                        ﻿Tel (888) 488-4968<br/>
+                        web:www.eventhamper.com
+                    </h5>
+                    <!--</div>-->
+                </div>
+            </div>
+
+            <div class="span8">
+                <h4 style="margin-left:40%">Email Us</h4>
+                <form class="form-horizontal" name="contactUsForm" action="{% url 'contactUs' %}" method="post">
+                    {% csrf_token %}
+                    <fieldset>
+                        <div class="control-group">
+                            <label class="control-label">Name <sup>*</sup></label>
+                            <div class="controls">
+                                <input type="text" placeholder="name" name="name" required>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="inputEmail">Email <sup>*</sup></label>
+                            <div class="controls">
+                                <input type="email" id="emailId" name="emailId" placeholder="Email" required>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label"><span>Reason<sup>*</sup></span></label>
+                            <div class="controls">
+                                <select class="span11" name="reason" required>
+                                    <option value="">Select</option>
+                                    <option value="Enquiry">Enquiry</option>
+                                    <option value="Feedback">Feedback</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label"><span>Message<sup>*</sup></span></label>
+                            <div class="controls">
+                                <textarea rows="3" id="textarea" name="message" required></textarea>
+                            </div>
+                        </div>
+
+                        <button class="shopBtn" type="submit" style="margin-left:40%">Send Email</button>
+
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+{% endblock %}

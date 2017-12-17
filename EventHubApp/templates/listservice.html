@@ -1,0 +1,35 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% load ratings %}
+{% static '' as baseUrl %}
+{% block content %}
+<div class="well well-small">
+	<h3>Our {{ category.category_name }}
+	<a style="font-size:10pt;float: right" href="javascript:sortProfilebyPrice({{profileJsons}})">Sort by price</a>
+	<a style="font-size:10pt;float: right" href="javascript:sortProfilebyName({{profileJsons}})">Sort by Name</a>
+	</h3>
+	<div id="listservicecontent" class="row-fluid">
+		<ul class="thumbnails">
+			{% for profile in profiles %}
+				<li class="span4">
+					<div class="thumbnail">
+						<a href="/getdetail?profile_id={{profile.profile_id}}" class="overlay"></a>
+						<a class="zoomTool" href="/getdetail?profile_id={{profile.profile_id}}" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
+						<a href="/getdetail?profile_id={{profile.profile_id}}"><img src="/static/images/{{profile.pic1}}" alt=""></a>
+						<div class="caption cntr">
+							<p>{{profile.profile_name}}</p>
+							<p>{{profile.price}}</p>
+							<!-- <h4><a class="shopBtn" href="#" title="add to cart"> View </a></h4> -->
+							<div class="actionList">
+								{% ratings profile %}
+								<a class="pull-left" href="#">Counter: </a>
+							</div> 
+							<br class="clr">
+						</div>
+					</div>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+{% endblock %}

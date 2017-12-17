@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .forgotbutton{
+        width: 25%;
+        display: block;
+        box-sizing: border-box;
+        min-height: 34px;
+        color: #fff;
+        background: #f89406;
+        margin: auto;
+        font-size: 14px;
+        font-weight: bold;
+            border-top-color: initial;
+    border-top-style: initial;
+    border-top-width: 0px;
+    border-right-color: initial;
+    border-right-style: initial;
+    border-right-width: 0px;
+    border-bottom-color: initial;
+    border-bottom-style: initial;
+    border-bottom-width: 0px;
+    border-left-color: initial;
+    border-left-style: initial;
+    border-left-width: 0px;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+        border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    }
+</style>
+
+<div class="well well-small">
+<form action="sendEmail" class="form-horizontal"  method="get"> {#  onsubmit="return validateForm();"#}
+                {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <h4>Enter your email</h4>
+
+                    <div class="control-group">
+                        <label class="control-label" for="emailId">Email<sup>*</sup></label>
+                        <div class="controls">
+                            <input type="text" id="emailId" name="emailId"  placeholder="Email" required>
+                            <br>
+                            <p style="color: grey; font-style: italic">We will send you password to this email ID.</p>
+                        </div>
+                    </div>
+
+                     <div class="control-group">
+{#                         <div class="controls">#}
+                       <button type="submit" class="forgotbutton">Send Password</button>
+{#                         </div>#}
+                     </div>
+
+</form>
+<div class="messages">
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+</div>
+
+</div>
+
+{% endblock %}

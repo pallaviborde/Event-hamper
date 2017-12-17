@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+
+        .bcolor {
+            border-spacing: 20px;
+        }
+
+        .widthClass1 {
+            width: 30%;
+            color: red;
+        }
+
+        table {
+            border: 5px;
+            margin-right: auto;
+            margin-left: auto;
+            text-align: center;
+            border-collapse: separate;
+        }
+
+        .bgcolor1 {
+            background: #FAEBD7;
+        }
+
+        .bgcolor2 {
+            background: #ADD8E6;
+        }
+
+        th, td {
+            padding: 10px;
+            font-family: 'calibri';
+            font-weight: bolder;
+            width: 40%;
+            height: 20%;
+        }
+    </style>
+
+    <table border class="bcolor">
+        <thead>
+        <tr class="bgcolor1">
+            <th>Product</th>
+            <th>Unit Price</th>
+            <th>Quantity</th>
+            <th>Total {{ tot }}</th>
+            <th>Remove</th>
+        </tr>
+        </thead>
+        <tbody class="bgcolor2">
+        {% for item in cart.cart %}
+        <tr>
+           	<td><a href="/getdetail?profile_id={{item.product.profile_id}}" class="overlay">{{ item.product.profile_name }}</td></a>
+            <td>{{ item.total_price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.total_price }}</td>
+            <td> 
+            
+            	<a on-click href={% url 'deletefromcart' product_id=item.product.profile_id %}><span class="icon-remove"></span></a>
+        	</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="/home" class="shopBtn"><span class="icon-arrow-left"></span> Continue Shopping </a>
+    <a href="login.html" class="shopBtn pull-right">Check Out <span class="icon-arrow-right"></span></a>
+{% endblock %}

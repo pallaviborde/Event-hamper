@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+{% static '' as baseUrl %}
+{% block content %}
+<style>
+
+    .bcolor {
+        border-spacing: 5px;
+    }
+
+    .widthClass1 {
+        width: 30%;
+        color: red;
+    }
+
+    table {
+        border: 5px;
+        margin-right: auto;
+        margin-left: auto;
+        text-align: left;
+        border-collapse: separate;
+    }
+
+    .bgcolor1 {
+        background: #FAEBD7;
+    }
+
+    .bgcolor2 {
+        background: #ADD8E6;
+    }
+
+    th, td {
+        padding: 10px;
+        font-family: 'calibri';
+        font-weight: bolder;
+        width: 40%;
+        height: 20%;
+    }
+</style>
+<div class="well well-small">
+    <form class="form-horizontal" name="modifyServiceDetailsForm"
+          action="{% url 'modifyServiceUserProfile' %}" method="post">
+
+        {% csrf_token %}
+        <table class="bcolor">
+            <tr>
+                <td>First Name</td>
+                <td><input type="text" name="fname" placeholder={{ userDetails.first_name }} disabled></td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <th><input type="text" name="lname" placeholder={{ userDetails.last_name }} disabled></th>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <th><input type="text" name="email" placeholder={{ userDetails.email }} disabled></th>
+            </tr>
+             <tr>
+                <th>Phone</th>
+                <th><input type="text" name="phone" placeholder={{ userDetails.phone }}></th>
+            </tr>
+            <tr>
+                <th>Street1</th>
+                <th><input type="text" name="street1" placeholder={{ userDetails.street1 }}></th>
+            </tr>
+            <tr>
+                <th>Street2</th>
+                <th><input type="text" name="street2" placeholder={{ userDetails.street2 }}></th>
+            </tr>
+            <tr>
+                <th>City</th>
+                <th><select name="cityName" style="margin: 5px;">
+                                    <option value="" >Select </option>
+                                    {% for cname in cityNames %}
+                                        <option value="{{ cname.city_name }}"> {{ cname.city_name }} </option>
+                                    {% endfor %}
+							    </select></th>
+            </tr>
+            <tr>
+                <th>State</th>
+                <th><select name="stateName" style="margin: 5px;">
+                                    <option value="" >Select </option>
+                                    {% for sname in stateNames %}
+                                        <option value="{{ sname.city_state }}"> {{ sname.city_state }} </option>
+                                    {% endfor %}
+							    </select></th>
+            </tr>
+            <tr>
+                <th>Pin Number</th>
+                <th><input type="text" name="pin" placeholder={{ userDetails.pin_number }}></th>
+            </tr>
+            <tr>
+                <th>Select Profile to Update</th>
+                <th><select name="categoryID" style="margin: 5px;">
+                    <option value="">Select</option>
+                    {% for list in userCategories %}
+                    <option value="{{ list.category_id }}"> {{ list.category_name }}</option>
+                    {% endfor %}
+                </select>
+                </th>
+            </tr>
+            <tr>
+                <th>Select Profiles to disable</th>
+                <th>
+                    <select name="disableProfile" style="margin: 5px;">
+                    <option value="">Select</option>
+                    {% for list1 in profileDetails %}
+                    <!--<input type="checkbox" name=checkProfileID value={{ list1.profile_id }}>-->
+                    <option value="{{ list1.profile_id }}"> {{ list1.profile_name }}</option>
+                    {% endfor %}
+                        </select>
+                </th>
+            </tr>
+
+            <tr>
+                <th>Select Profiles to enable</th>
+                <th>
+                    <select name="enableProfile" style="margin: 5px;">
+                    <option value="">Select</option>
+                    {% for list1 in DisabledProfiles %}
+                    <option value="{{ list1.profile_id }}"> {{ list1.profile_name }}</option>
+                    {% endfor %}
+                        </select>
+                </th>
+            </tr>
+
+        </table>
+
+        <div class="control-group">
+            <div class="controls">
+                <input type="submit" name="submitRegistration" value="Save"
+                       class="exclusive shopBtn" style="margin-left: 15%">
+                <input type="reset" class="exclusive shopBtn" name="ResetButton" value="Reset">
+
+            </div>
+        </div>
+</form>
+{% endblock %}
+</div>
+</div>

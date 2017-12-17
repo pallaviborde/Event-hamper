@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load static %}
+{% static '' as baseUrl %}
+{% block content %}
+<style>
+
+    .bcolor {
+        border-spacing: 5px;
+    }
+
+    .widthClass1 {
+        width: 30%;
+        color: red;
+    }
+
+    table {
+        border: 5px;
+        margin-right: auto;
+        margin-left: auto;
+        text-align: left;
+        border-collapse: separate;
+    }
+
+    th, td {
+        padding: 10px;
+        font-family: 'calibri';
+        font-weight: bolder;
+        width: 40%;
+        height: 20%;
+    }
+</style>
+<div class="well well-small">
+    <!--<h3>Update {{ profileData.profile_name}} Profile for {{ profileData.profile_name }} </h3>-->
+    <h3>Update {{ profileData.profile_name}} Profile </h3>
+    <form class="form-horizontal" name="updateServiceProfileDetailsForm" enctype="multipart/form-data"
+          action="{% url 'updateUserProfileDetails' %}" method="post" onsubmit="return validateForm(this.form)">
+        {% csrf_token %}
+        <table class="bcolor">
+            <tr>
+                <input type="hidden" name="pid" value="{{ profileData.profile_id }}">
+            </tr>
+            <tr>
+                <td>Profile Picture 1</td>
+                <td>
+                    {% if profileData.pic1 %}
+                        <img src="{% static "events/assets/img/media/"%}{{ profileData.pic1 }}" alt={{ profileData.pic1 }} style="width:25%">
+                    {% endif %}
+                </td>
+                <td><input type="file" name="pic1" id="pic1"></td>
+
+            <tr>
+                    <td>Profile Picture 2</td>
+            <td>
+                    {% if profileData.pic2 %}
+                    <img src="{% static "events/assets/img/media/"%}{{ profileData.pic2 }}" alt={{ profileData.pic2 }}
+                    style="width:25%">
+                    {% endif %}
+                </td>
+                <td><input type="file" name="pic2" id="pic2"></td>
+            </tr>
+            <tr>
+                <td>Profile Picture 3</td>
+                <td>
+                {% if profileData.pic3 %}
+                    <img src="{% static "events/assets/img/media/"%}{{ profileData.pic3 }}" alt={{ profileData.pic3 }}
+                style="width:25%">
+                {% endif %}
+                </td>
+                <td><input type="file" name="pic3" id="pic3"></td>
+            </tr>
+
+            <tr>
+                <td>Profile Picture 4</td>
+                <td>
+                    {% if profileData.pic4 %}
+                    <img src="{% static "events/assets/img/media/"%}{{ profileData.pic4 }}" alt={{ profileData.pic4 }}
+                    style="width:25%">
+                    {% endif %}
+                </td>
+                <td><input type="file" name="pic4" id="pic4"></td>
+            </tr>
+            <tr>
+                <td>Profile Picture 5</td>
+                <td>
+                    {% if profileData.pic5 %}
+                    <img src="{% static "events/assets/img/media/"%}{{ profileData.pic5 }}" alt={{ profileData.pic5 }}
+                    style="width:25%">
+                    {% endif %}
+                </td>
+                <td><input type="file" name="pic5" id="pic5"></td>
+
+            </tr>
+            <tr>
+                <td>Price</td>
+                <th><input type="number" name="price" id="price" placeholder={{ profileData.price }}></th>
+            </tr>
+            <tr>
+            <tr>
+                <td>Type</td>
+                <td><textarea name="stype" id="stype" rows="3" cols="30" placeholder={{ profileDetailsData.type }}></textarea></td>
+            </tr>
+            <tr>
+                <th>Offers</th>
+                <th><textarea name="soffer" id="soffer" rows="3" cols="30" placeholder={{ profileDetailsData.offers }}></textarea></th>
+            </tr>
+            <tr>
+                <th>Package</th>
+                <th><textarea name="spackage" id="spackage" rows="3" cols="30" placeholder={{ profileDetailsData.package }}></textarea></th>
+            </tr>
+            <tr>
+                <th>Service Details</th>
+                <th><textarea name="sdetails" id="sdetails" rows="4" cols="30"
+                              placeholder="{{ profileDetailsData.servicedetails }}"></textarea></th>
+            </tr>
+            <tr>
+                <th>Product Description</th>
+                <th><textarea name="sdesc" id="sdesc" rows="5" cols="30"
+                              placeholder="{{ profileDetailsData.productdescription }}"></textarea></th>
+            </tr>
+            <tr>
+                <th>About Product</th>
+                <th><textarea name="sprod" id="sprod" rows="5" cols="30"
+                              placeholder="{{ profileDetailsData.aboutproduct }}"></textarea></th>
+            </tr>
+            <tr>
+                <th>About Us</th>
+                <th><textarea name="sabout" id="sabout" rows="5" cols="30"
+                              placeholder="{{ profileDetailsData.aboutus }}"></textarea></th>
+            </tr>
+        </table>
+
+        <div class="control-group">
+            <div class="controls">
+                <input type="submit" name="submitProfileUpdate" value="Update"
+                       class="exclusive shopBtn" style="margin-left: 15%">
+                <!--<input type="reset" class="exclusive shopBtn" name="ResetButton" value="Cancel">-->
+                <input type="button" class="exclusive shopBtn" name="CancelButton" value="Cancel"
+                       onclick="window.location = 'http://localhost:8000/home';">
+
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+</div>
+</div>

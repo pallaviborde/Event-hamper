@@ -1,0 +1,87 @@
+<!-- {% extends 'base.html' %}
+{% block content %}
+<style>
+    .feedbutton{
+        width: 25%;
+        display: block;
+        box-sizing: border-box;
+        min-height: 34px;
+        color: #fff;
+        background: #f89406;
+        margin: auto;
+        font-size: 14px;
+        font-weight: bold;
+            border-top-color: initial;
+    border-top-style: initial;
+    border-top-width: 0px;
+    border-right-color: initial;
+    border-right-style: initial;
+    border-right-width: 0px;
+    border-bottom-color: initial;
+    border-bottom-style: initial;
+    border-bottom-width: 0px;
+    border-left-color: initial;
+    border-left-style: initial;
+    border-left-width: 0px;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+        border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    }
+   .rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+       display: inline-block;
+       color: #f89406;
+       padding-left: 20px;
+}
+.rating > span {
+  display: inline-block;    
+  position: relative;
+  width: 1.1em;
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+   content: "\2605";
+   position: absolute;
+}
+</style>
+<div class="well">
+    <h2>Feedback</h2>
+    <form  action="{% url 'saverating' product_id=profile_id%}" method="post"class="form-horizontal">
+     {% csrf_token %}
+        <div class="control-group">
+            <label class="control-label" for="feedback">Feedback</label>
+            <div class="controls">
+                <textarea rows="4" cols="50" id="feedback" name="feedback" placeholder="Add your feedback here..">
+                </textarea>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Rating</label>
+            <div class="rating">
+            	<select name="rating"  style="margin: 5px;">
+					<option value="" >Select </option>
+					<option value=1> 1 </option>
+					<option value=2> 2 </option>
+					<option value=3> 3 </option>
+					<option value=4> 4 </option>
+					<option value=5> 5 </option>
+				</select>
+        	</div>
+        </div>
+
+        <div class="control-group">
+            <button type="submit" class="feedbutton">Submit Feedback</button>
+        </div>
+
+    </form>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% load render_table from django_tables2 %}
+{% load static %}
+<!doctype html>
+<html>
+    <head>
+    </head>
+    <body>
+        {% render_table list1 %}
+			<select name="item_id" onChange="window.location.href='/signup/' " >
+				{% for list in list1 %}
+    				<option value="{{ list.category_id }}"> {{ list.category_name }} </option>
+				{% endfor %}
+			</select>
+    </body>
+</html>

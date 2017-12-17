@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load customfilter %}
+{% static '' as baseUrl %}
+{% block content %}
+
+<div class="well well-small">
+    <div class="row-fluid">
+        <div class="span5">
+            <div id="mymover" class="mover slide cntr">
+                <div class="mover-inner">
+                 <!-- {% for i in range %}
+                    {% with y=forloop.counter|stringformat:"s" %}
+                    {% with pic='pic'|add:y %}
+                    {% if profile.pic1 %}
+                    <div class="item">
+                        <img src="/static/images/{{ profile|get_item:pic }}" alt="" style="width:100%">
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endfor %}-->
+                    {% for pic in range %}
+                        {% if pic %}
+                            <div class="item">
+                                <img id="{{ pic }}" src="/static/images/{{ pic }}" alt="" style="width:100%">
+                                <!--<img src="/static/images/{{ profile|get_item:pic }}" alt="" style="width:100%">-->
+                               <!-- <img id="{{ pic }}" src="{% static "events/assets/img/{{ pic }}" %}" alt="" style="width:100%">-->
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <a class="left mover-control" href="#mymover" data-slide="prev">‹</a>
+                <a class="right mover-control" href="#mymover" data-slide="next">›</a>
+            </div>
+        </div>
+        <div class="span7">
+            <h3>Blush Blooms</h3>
+            <hr class="soft"/>
+
+            <form class="form-horizontal qtyFrm" action={% url 'addtocart' product_id=profile.profile_id %}>
+            <div class="control-group">
+                <label class="control-label"><span>Type</span></label>
+                <div class="controls">
+                    <select class="span11" id="myTypes">
+                        <script type="text/javascript">
+                            displayDropDown("{{ profileDetails.type }}", "myTypes");
+                        </script>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><span>Flowers</span></label>
+                <div class="controls">
+                    <select class="span11" id="myOffers">
+                        <script type="text/javascript">
+                            displayDropDown("{{ profileDetails.offers }}", "myOffers");
+                        </script>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><span>Size</span></label>
+                <div class="controls">
+                    <select class="span11" id="myPackages">
+                        <script type="text/javascript">
+                            displayDropDown("{{ profileDetails.package }}", "myPackages");
+                        </script>
+                    </select>
+                </div>
+            </div>
+            <!-- <h4>100 items in stock</h4> -->
+            <p>We will add more blooms and select the highest quality flowers we offer in this style</p>
+            <button type="submit" class="shopBtn"><span class=" icon-shopping-cart"></span> Add to cart
+            </button>
+            </form>
+        </div>
+        <!-- <h4>100 items in stock</h4> -->
+        <p>We will add more blooms and select the highest quality flowers we offer in this style</p>
+        <button type="submit" class="shopBtn"><span class=" icon-shopping-cart"></span> Add to cart
+        </button>
+    </form>
+    
+	</div>
+	<ul id="productDetail" class="nav nav-tabs">
+              <li class="active"><a href="#description" data-toggle="tab">Product Description</a></li>
+              <li class=""><a href="#product" data-toggle="tab">About the Product </a></li>
+			  <li class=""><a href="#us" data-toggle="tab">About Us </a></li>
+			  <li class=""><a href="#feedback" data-toggle="tab">Feedback </a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content tabWrapper">
+            <div class="tab-pane fade active in" id="description">
+			  <!-- <h4>Product Information</h4> -->
+				<p>
+                        {{ profileDetails.productdescription }}
+				</p>
+			</div>
+			<div class="tab-pane fade" id="product"> 
+					{{ profileDetails.aboutproduct }}
+			</div>
+			<div class="tab-pane fade" id="us">
+			<p>
+                        {{ profileDetails.aboutus }}
+			 </p>
+			</div>
+			<div class="tab-pane fade" id="feedback">
+				{% for feedback in feedbacks %}
+    				 <p> * {{feedback.description}} </p>
+				{% endfor %}
+				<a href={% url 'redirectrating' product_id=profile.profile_id %}> Add feedback </a>
+			</div>
+		</div>
+	
+{% endblock %}
+

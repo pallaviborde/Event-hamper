@@ -1,0 +1,402 @@
+{% load static %}
+<!-- Customize styles -->
+<link rel="stylesheet" type="text/css" href="{% static 'events/style.css' %}"/>
+<!-- Bootstrap styles -->
+<link rel="stylesheet" href="{% static 'events/assets/css/bootstrap.css' %}"/>
+<!-- font awesome styles -->
+<link rel="stylesheet" href="{% static 'events/assets/font-awesome/css/font-awesome.css' %}"/>
+<!-- Favicons -->
+<link rel="shortcut icon" href="{% static 'events/assets/ico/favicon.ico' %}"/>
+{% load django_tables2 %}
+<head>
+    <meta charset="utf-8">
+    <title>EventHamper</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <script type="text/javascript">
+        function showDescField(name) {
+            if (name == 'Other') document.getElementById('div1').innerHTML = '<label class="control-label" for="file">New Category Name</label><div class="controls"><input type="text" name="newCategory" id="serviceDesc" required/></div>';
+            else document.getElementById('div1').innerHTML = '';
+        }
+
+        function validateForm() {
+
+        }
+    </script>
+    <!--[if IE 7]>
+			<link href="css/font-awesome-ie7.min.css" rel="stylesheet">
+		<![endif]-->
+
+    <!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+</head>
+<body>
+<!-- 
+	Upper Header Section 
+-->
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="topNav">
+        <div class="container">
+            <div class="alignR">
+                <div class="pull-left socialNw">
+                    <a href="#"><span class="icon-twitter"></span></a>
+                    <a href="#"><span class="icon-facebook"></span></a>
+                    <a href="#"><span class="icon-youtube"></span></a>
+                    <a href="#"><span class="icon-tumblr"></span></a>
+                </div>
+                <a class="active" href="index.html"> <span class="icon-home"></span> Home</a>
+                <a href="#"><span class="icon-user"></span> My Account</a>
+                <a href="register.html"><span class="icon-edit"></span> Register </a>
+                <a href="contact.html"><span class="icon-envelope"></span> Contact us</a>
+                <a href="cart.html"><span class="icon-shopping-cart"></span> 0 Item(s) - <span
+                        class="badge badge-warning"> @ &#8377;0.0</span></a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--
+Lower Header Section 
+-->
+<div class="container">
+    <div id="gototop"></div>
+    <header id="header">
+        <div class="row">
+            <div class="span4">
+                <h1>
+                    <a class="logo" href="index.html"><span>EventHub</span>
+                        <img src="{% static "events/assets/img/logo.png" %}" alt="EventHub Logo">
+                    </a>
+                </h1>
+            </div>
+            <div class="span4">
+                <div class="offerNoteWrapper">
+                    <h1 class="dotmark">
+                        <i class="icon-cut"></i>
+                        Event Planning is now available @ &#8377;149
+                    </h1>
+                </div>
+            </div>
+            <div class="span4 alignR">
+                <p><br> <strong id="textColor"> Support (24/7) : 0000 1234 000 </strong><br><br></p>
+                <span class="btn btn-mini">[ 0 ] <span class="icon-shopping-cart"></span></span>
+                <span class="btn btn-warning btn-mini">&#8377;</span>
+            </div>
+        </div>
+    </header>
+    <!--
+    Navigation Bar Section
+    -->
+    <div class="navbar">
+        <div class="navbar-inner" style="padding-right:0px">
+            <div class="container">
+                <a data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <div class="nav-collapse">
+                    <ul class="nav">
+                        <li class="active"><a href="index.html">Home </a></li>
+                        <li class=""><a href="list-view.html">List View</a></li>
+                        <li class=""><a href="grid-view.html">Grid View</a></li>
+                        <li class=""><a href="three-col.html">Three Column</a></li>
+                        <li class=""><a href="four-col.html">Four Column</a></li>
+                        <li class=""><a href="general.html">General Content</a></li>
+                    </ul>
+                    <form action="#" class="navbar-search pull-left">
+                        <input type="text" placeholder="Search" class="search-query span2" style="padding:14px 14px">
+                    </form>
+                    <ul class="nav pull-right">
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="icon-lock"></span>
+                                Login <b class="caret"></b></a>
+                            <div class="dropdown-menu">
+                                <form class="form-horizontal loginFrm">
+                                    <div class="control-group">
+                                        <input type="text" class="span2" id="inputEmail" placeholder="Email">
+                                    </div>
+                                    <div class="control-group">
+                                        <input type="password" class="span2" id="inputPassword" placeholder="Password">
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="checkbox">
+                                            <input type="checkbox"> Remember me
+                                        </label>
+                                        <button type="submit" class="shopBtn btn-block">Sign in</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--
+    Body Section
+    -->
+    <div class="row">
+        <div id="sidebar" class="span3">
+            <div class="well well-small">
+                <ul class="nav nav-list">
+                    {% block content %}
+                        {% for category in categoryName %}
+                            <li><a href="http://localhost:8000/{{ category.category_url }}"><span
+                                    class="icon-chevron-right"></span>{{ category.category_name }}</a></li>
+                        {% endfor %}
+                    {% endblock %}
+                </ul>
+            </div>
+            <div class="well well-small alert alert-warning cntr">
+                <h2>50% Discount</h2>
+                <p>
+                    only valid for today's online order. <br><a class="defaultBtn" href="#">Click here </a>
+                </p>
+            </div>
+            <div class="well well-small"><a href="#"><img src="{% static "events/assets/img/paypal.jpg" %}"
+                                                          alt="payment method paypal"></a></div>
+
+            <a class="shopBtn btn-block" href="#">Upcoming services <br>
+                <small>Click to view</small>
+            </a>
+            <br>
+            <br>
+
+        </div>
+        <div class="span9">
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+                <li class="active">Registration</li>
+            </ul>
+            <!--<h3> Registration</h3> -->
+            <!--<hr class="soft"/> -->
+            <div class="well">
+                <form class="form-horizontal" name="orderForm" enctype="multipart/form-data"
+                      action="{% url 'getForm' %}" method="post" onsubmit="return validateForm();">
+                    {% csrf_token %}
+                    <h4>Personal Details</h4>
+                    <div class="control-group">
+                        <label class="control-label">Title</label>
+                        <div class="controls">
+                            <select class="span1" name="title" id="title" style="width: 75px" required>
+                                <option value="">select</option>
+                                <option value="Mr.">Mr.</option>
+                                <option value="Mrs">Mrs</option>
+                                <option value="Miss>Miss</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class=" control-group">
+                                <label class="control-label" for="inputFname">First name<sup>*</sup></label>
+                                <div class="controls">
+                                    <input type="text" id="inputFname" name="inputFname" placeholder="First Name"
+                                           required>
+                                </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="inputLname">Last name <sup>*</sup></label>
+                            <div class="controls">
+                                <input type="text" id="inputLname" name="inputLname" placeholder="Last Name" required>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="inputEmail">Email <sup>*</sup></label>
+                            <div class="controls">
+                                <input type="text" id="emailId" name="emailId" placeholder="Email" required>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Password <sup>*</sup></label>
+                            <div class="controls">
+                                <input type="password" id="passwd" name="passwd" placeholder="Password" required>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Date of Birth<sup>*</sup></label>
+                            <div class="controls">
+                                <input type="date" id="birthday" name="birthday" required>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="file">Upload Image<sup>*</sup></label>
+                            <div class="controls">
+                                <input type="file" name="pic" id="pic" required>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <!--<div class="controls">
+                             <input type="submit" name="submitAccount" value="Register" class="exclusive shopBtn">
+                            </div> -->
+                        </div>
+                        <!--</form> -->
+                        <!--</div> -->
+
+                        <div class="well">
+                            <!--<form class="form-horizontal" >-->
+                            <h4>Billing Details</h4>
+                            <div class="control-group">
+                                <label class="control-label">Street Address 1 <sup>*</sup></label>
+                                <div class="controls">
+                                    <input type="text" id="stadd1" name="stadd1" placeholder=" Field name" required>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Street Address 2 </label>
+                                <div class="controls">
+                                    <input type="text" id="stadd2" name="stadd2" placeholder=" Field name">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">City <sup>*</sup></label>
+                                <div class="controls">
+                                    <input type="text" id="city" name="city" placeholder=" Field name" required>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">State <sup>*</sup></label>
+                                <div class="controls">
+                                    <input type="text" name="state" id="state" maxlength="20" size="25" required>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="zipcode"> Zip<sup>*</sup> </label>
+                                <div class="controls">
+                                    <input type="text" name="zip" id="zip" maxlength="9" size="15"
+                                           onkeypress='return event.charCode >= 48 && event.charCode <= 57' required>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label"> Telephone number<sup>*</sup> </label>
+                                <div class="controls">
+                                    <input type="tel" name="phone" name="phone" id="phone" maxlength="14" size="15"
+                                           onkeypress='return event.charCode >= 48 && event.charCode <= 57' required>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <!--<div class="controls">
+                                 <input type="submit" name="submitAccount" value="Register" class="shopBtn exclusive">
+                                </div>-->
+                            </div>
+                            <!--</form>-->
+                        </div>
+
+                        <div class="well">
+                            <!--<form class="form-horizontal" >-->
+                            <h4>Service Details</h4>
+                            <div class="control-group">
+                                <label class="control-label">Choose Category <sup>*</sup></label>
+                                <div class="controls">
+                                    <select class="span1" name="category" style="width: 150px"
+                                            onchange="showDescField(this.options[this.selectedIndex].value)" required>
+                                        <option value="">select</option>
+                                        {% block FormCategories %}
+                                            {% for category in categoryName %}
+                                                <option value={{ category.category_name }}>{{ category.category_name }}</option>
+                                            {% endfor %}
+                                        {% endblock %}
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group" id="div1">
+                            </div>
+
+                           <!-- <div class="control-group">
+                                <label class="control-label">Service Type <sup>*</sup></label>
+                                <div class="controls">
+                                    <input type="text" name="stype" id="stype" maxlength="20" size="25" required>
+                                </div>
+                            </div> -->
+                            <!-- <div class="control-group">
+                                     <label class="control-label">Service Name <sup>*</sup></label>
+                                     <div class="controls">
+                                         <input type="text" name="sname" id="sname" maxlength="20" size="25" required>
+                                     </div>
+                                 </div>
+
+                             <div class="control-group">
+                                     <label class="control-label">Size <sup>*</sup></label>
+                                     <div class="controls">
+                                         <input type="text" name="size" id="size" maxlength="20" size="25" required>
+                                     </div>
+                                 </div> -->
+
+
+                            <div class="control-group">
+                                <div class="controls">
+                                    <input type="submit" name="submitRegistration" value="Register"
+                                           class="exclusive shopBtn">
+                                    <input type="reset" class="exclusive shopBtn" name="ResetButton" value="Reset">
+
+                                </div>
+                            </div>
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<!--
+Footer
+-->
+<footer class="footer" style="width:auto">
+    <div class="row-fluid">
+        <div class="span2">
+            <h5>Your Account</h5>
+            <a href="#">YOUR ACCOUNT</a><br>
+            <a href="#">PERSONAL INFORMATION</a><br>
+            <a href="#">ADDRESSES</a><br>
+            <a href="#">DISCOUNT</a><br>
+            <a href="#">ORDER HISTORY</a><br>
+        </div>
+        <div class="span2">
+            <h5>Iinformation</h5>
+            <a href="contact.html">CONTACT</a><br>
+            <a href="#">SITEMAP</a><br>
+            <a href="#">LEGAL NOTICE</a><br>
+            <a href="#">TERMS AND CONDITIONS</a><br>
+            <a href="#">ABOUT US</a><br>
+        </div>
+        <div class="span2">
+            <h5>Our Offer</h5>
+            <a href="#">NEW PRODUCTS</a> <br>
+            <a href="#">TOP SELLERS</a><br>
+            <a href="#">SPECIALS</a><br>
+            <a href="#">MANUFACTURERS</a><br>
+            <a href="#">SUPPLIERS</a> <br/>
+        </div>
+        <div class="span6">
+            <h5>Today's Thought</h5>
+            Focus on the journey, not the destination. Joy is found not in finishing an activity but in doing it.
+            <br>- Greg Anderson
+        </div>
+    </div>
+</footer>
+</div><!-- /container -->
+
+<div class="copyright">
+    <div class="container" style="text-align:center; margin-top:5px;">
+        <p class="pull-right">
+            <a href="#"><img src="{% static "events/assets/img/maestro.png" %}" alt="payment"></a>
+            <a href="#"><img src="{% static "events/assets/img/mc.png" %}" alt="payment"></a>
+            <a href="#"><img src="{% static "events/assets/img/pp.png" %}" alt="payment"></a>
+            <a href="#"><img src="{% static "events/assets/img/visa.png" %}" alt="payment"></a>
+            <a href="#"><img src="{% static "events/assets/img/disc.png" %}" alt="payment"></a>
+        </p>
+        <span>Copyright &copy; 12/17/2017 Event Hamper</span>
+    </div>
+</div>
+<a href="#" class="gotop"><i class="icon-double-angle-up"></i></a>
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="{% static "events/assets/js/jquery.js" %}"></script>
+<script src="{% static "events/assets/js/bootstrap.min.js" %}"></script>
+<script src="{% static "events/assets/js/jquery.easing-1.3.min.js" %}"></script>
+<script src="{% static "events/assets/js/jquery.scrollTo-1.4.3.1-min.js" %}"></script>
+<script src="{% static "events/assets/js/shop.js" %}"></script>
+</body>
+</html>

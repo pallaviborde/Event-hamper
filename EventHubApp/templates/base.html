@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title> {% block title %} EventHamper {% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    {% load static %}
+    <!-- Customize styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'events/style.css' %}"/>
+    <!-- Bootstrap styles -->
+    <link rel="stylesheet" href="{% static 'events/assets/css/bootstrap.css' %}"/>
+    <!-- font awesome styles -->
+    <link rel="stylesheet" href="{% static 'events/assets/font-awesome/css/font-awesome.css' %}"/>
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="{% static 'events/assets/ico/favicon.ico' %}"/>
+    <script src="{% static 'events/assets/js/jquery.js' %}"></script>
+    <script src="{% static 'events/assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'events/assets/js/jquery.easing-1.3.min.js' %}"></script>
+    <script src="{% static 'events/assets/js/jquery.scrollTo-1.4.3.1-min.js' %}"></script>
+    <script src="{% static 'events/assets/js/shop.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+	<script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+    <script type="text/javascript">
+			    function displayDropDown(myStr, myOptions) {
+			        var res = myStr.split(";");
+			        var selectElement = document.getElementById(myOptions);
+			        for (var i = 0; i < res.length; i++) {
+
+			            var option = document.createElement("option");
+			            option.text = res[i];
+			            option.value = res[i];
+			            selectElement.add(option);
+
+			        }
+			    }
+
+	            function sortProfilebyPrice(profiles){
+                    jsonProfilesList=JSON.parse(profiles);
+                    var profileList = [];
+                    for (var counter=0; counter<jsonProfilesList.length;counter++) {
+                        profileList.push(jsonProfilesList[counter]);
+                    }
+                    profileList.sort(
+                        function (p1,p2) {
+                            return p1.fields.price-p2.fields.price;
+                        }
+                    );
+                    renderProfiles(profileList);
+                }
+
+                function sortProfilebyName(profiles){
+                    jsonProfilesList=JSON.parse(profiles);
+                    var profileList = [];
+                    for (var counter=0; counter<jsonProfilesList.length;counter++) {
+                        profileList.push(jsonProfilesList[counter]);
+                    }
+                    profileList.sort(
+                        function (p1,p2) {
+                            return p1.fields.profile_name.localeCompare(p2.fields.profile_name);
+                        }
+                    );
+                    renderProfiles(profileList);
+                }
+
+		function renderProfiles(profileList) {
+			var mainDiv = document.getElementById("listservicecontent");
+			mainDiv.innerHTML = "";
+
+			mainDiv.class='row-fluid';
+			var content = '<ul class="thumbnails">';
+			for (var i = 0; i < profileList.length; i++) {
+			    content += '<li class="span4">'
+					content += '<div class="thumbnail">'
+						content += '<a href="/getdetail?profile_id='+profileList[i].pk+'" class="overlay"></a>'
+						content += '<a class="zoomTool" href="/getdetail?profile_id='+profileList[i].pk+'" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>'
+						content += '<a href="/getdetail?profile_id='+profileList[i].pk+'"><img src="/static/images/'+profileList[i].fields.pic1+'" alt=""></a>'
+						content += '<div class="caption cntr">'
+							content += '<p>'+profileList[i].fields.profile_name+'</p>'
+							content += '<p>'+profileList[i].fields.price+'</p>'
+							content += '<!-- <h4><a class="shopBtn" href="#" title="add to cart"> View </a></h4> -->'
+							content += '<div class="actionList">'
+								content += '<a class="pull-left" href="#">Counter: </a>'
+								content += '<a class="pull-left" href="#">Rating:  </a>'
+							content += '</div>'
+							content += '<br class="clr">'
+						content += '</div>'
+					content += '</div>'
+				content += '</li>'
+            }
+			content += '</ul>';
+			mainDiv.innerHTML = content;
+        }
+
+			</script>
+		<style type="text/css">
+		.star-icon {
+    color: #ddd;
+    font-size: 18px;
+    position: relative;
+}
+.star-icon.full:before {
+    color: #FDE16D;
+    content: '\2605'; /* Full star in UTF8 */
+    position: absolute;
+    left: 0;
+    text-shadow: 0 0 2px rgba(0,0,0,0.7);
+ }
+.star-icon.half:before {
+    color: #FDE16D;
+    content: '\2605'; /* Full star in UTF8 */
+    position: absolute;
+    left: 0;
+    width: 50%;
+    overflow: hidden;
+    text-shadow: 0 0 2px rgba(0,0,0,0.7);
+}
+		</style>
+    <!--[if IE 7]>
+				<link href="css/font-awesome-ie7.min.css" rel="stylesheet">
+			<![endif]-->
+
+    <!--[if lt IE 9]>
+				<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+			<![endif]-->
+	{% load django_tables2 %}
+		  <!-- Placed at the end of the document so the pages load faster -->
+	  </head>
+	  <body>
+			<!--
+				Upper Header Section
+			-->
+			<div class="navbar navbar-inverse navbar-fixed-top">
+				<div class="topNav">
+					<div class="container">
+						<div class="alignR">
+							<div class="pull-left socialNw">
+								<a href="#"><span class="icon-twitter"></span></a>
+								<a href="#"><span class="icon-facebook"></span></a>
+								<a href="#"><span class="icon-youtube"></span></a>
+								<a href="#"><span class="icon-tumblr"></span></a>
+							</div>
+							<a class="active" href="http://localhost:8000/home"> <span class="icon-home"></span> Home</a>
+                            <a href="http://localhost:8000/aboutUs"> About us</a>
+							<a href="http://localhost:8000/registerServiceDetails"><span class="icon-edit"></span> Service Registration </a>
+							<a href="http://localhost:8000/contact"><span class="icon-envelope"></span> Contact us</a>
+							<a href="{% url 'viewcart' %}"><span class="icon-shopping-cart"></span> {{cartlength}} Item(s) - <span class="badge badge-warning">{{tot}} @ &#8377;</span></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--
+			Lower Header Section
+			-->
+			<div class="container">
+				<div id="gototop"> </div>
+				<header id="header">
+					<div class="row">
+						<div class="span4">
+							<h1>
+							<a class="logo" href="http://localhost:8000/home"><span>EventHamper</span>
+								<img src="{% static "events/assets/img/logo.png" %}" alt="EventHub Logo">
+							</a>
+							</h1>
+						</div>
+						<div class="span4">
+							<div class="offerNoteWrapper">
+								<h1 class="dotmark">
+								<i class="icon-cut"></i>
+								Event Planning is now available @ &#8377;149
+								</h1>
+							</div>
+						</div>
+						<div class="span4 alignR">
+							<p><br> <strong id="textColor"> Support (24/7) :  0000 1234 000 </strong><br><br></p>
+			
+						</div>
+					</div>
+				</header>
+				<!--
+				Navigation Bar Section
+				-->
+				<div class="navbar">
+				  <div class="navbar-inner" style="padding-right:0px">
+					<div class="container">
+					  <a data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					  </a>
+					  <div class="nav-collapse">
+						<ul class="nav">
+						  <li class="active">
+						  	<select name="item_id" onChange="window.location.href='/getprofile?category_id='+this.value"  style="margin: 5px;">
+						  		<option value="" >Select </option>
+								{% for list in list1 %}
+    								<option value="{{ list.category_id }}"> {{ list.category_name }} </option>
+								{% endfor %}
+							</select></li>
+						</ul>
+						<form action={% url 'getallprofile' %} class="navbar-search pull-left" method="post">
+							{% csrf_token %}
+						  <input type="text" name="searchText" placeholder="Search" class="search-query span1" >
+						</form>
+						<ul class="nav"><li><a href="http://localhost:8000/account" class="nav-collapse"> My Account</a></li></ul>
+						
+						<ul class="nav pull-right">
+							<li class="dropdown">
+                                {% if isLoggedIn %}
+                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="icon-lock"></span> Hi {{ username }} <b class="caret"></b></a>
+                                    <div class="dropdown-menu">
+                                        <form action = "" class="form-horizontal loginFrm" method = "post">
+                                        {% csrf_token %}
+                                            <a data-toggle="dropdown" class="dropdown-toggle" href="#" type="submit" style="font-size:16px; padding:35px 35px;">Logout</a>
+                                        </form>
+                                    </div>
+                                {% else %}
+								    <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="icon-lock"></span> Login <b class="caret"></b></a>
+                                <div class="dropdown-menu">
+									<form action = "{% url 'signin' %}" class="form-horizontal loginFrm" method = "get">
+                    <!--<form action = "" class="form-horizontal loginFrm" method = "get">-->
+
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+              <div class="control-group">
+               <input type="text" class="span2" id="inputEmail" placeholder="Username" name = "username">
+              </div>
+              <div class="control-group">
+               <input type="password" class="span2" id="inputPassword" placeholder="Password" name = "password">
+              </div>
+
+              <div class="control-group">
+
+               <button type="submit" class="shopBtn btn-block">Sign in</button>
+              </div>
+            </form>
+            <div class="control-group">
+   				<a href="{% url "forgotPass" %}" class="form-horizontal loginFrm" >Forgot Password?</a>
+			</div>
+       
+                    <form  action = "{% url 'signup' %}" class="form-horizontal loginFrm" method="get">
+                        {% csrf_token %}
+                        <div class="control-group">
+                       <p>Don't have account?</p>
+                       <button type="submit" class="shopBtn btn-block">Sign Up</button>
+                    </div>
+                    </form>
+
+								</div>
+								{% endif %}
+
+							</li>
+						</ul>
+					  </div>
+					</div>
+				  </div>
+				</div>
+				<!--
+				Side Section
+				-->
+				<div class="row">
+					<div id="sidebar" class="span3">
+						<div class="well well-small">
+						Catagory:
+								{% for list in list1 %}
+              						<li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>{{ list.category_name }}</a></li>
+								{% endfor %}
+						</div>
+						<div class="well well-small">
+						Search:
+							<li><span class="icon-chevron-right"></span>Price</li>
+							<div>
+                                    <a href="/getprofileonprice?max=1000&min=0">Under &#8377;1000</a><br>
+                                    <a href="/getprofileonprice?max=2000&min=1000">&#8377;1000 to &#8377;2000</a><br>
+                                    <a href="/getprofileonprice?max=5000&min=2000">&#8377;2000 to &#8377;5000</a><br>
+                                    <a href="/getprofileonprice?max=10000&min=5000">&#8377;5000 to &#8377;10000</a><br>
+                                    <a href="/getprofileonprice?max=999999&min=10000">&#8377;10000 & Above</a><br>
+                                    <form action = " {% url 'getprofileonprice'%}" class="form-horizontal" name="searchByPrice" method = "post">
+
+                                    {% csrf_token %}
+                                        <div>
+                                            <input type="text" style="width: 50px" id="minPrice" placeholder="&#8377;min" name = "minPrice">
+                                            <input type="text" style="width: 50px" id="maxPrice" placeholder="&#8377;max" name = "maxPrice">
+                                            <button type="submit">Go</button>
+                                        </div>
+                                    </form>
+                                </div>
+							<li><span class="icon-chevron-right"></span>Rating</li>
+							<div>
+                            <a href="/getprofileonrating?min_rating=4&max_rating=5"><span class="star-icon full">☆</span>
+                            <span class="star-icon full">☆</span>
+                           	<span class="star-icon full">☆</span>
+                       		<span class="star-icon full">☆</span>
+                     		<span class="star-icon">☆</span>& Up</a>
+                            </div>
+                            <div>
+                            <a href="/getprofileonrating?min_rating=3&max_rating=4"><span class="star-icon full">☆</span>
+                            <span class="star-icon full">☆</span>
+                            <span class="star-icon full">☆</span>
+                            <span class="star-icon">☆</span>
+                            <span class="star-icon">☆</span>& Up</a>
+                            </div>
+                            <div>
+                            <a href="/getprofileonrating?min_rating=2&max_rating=3"><span class="star-icon full">☆</span>
+                            <span class="star-icon full">☆</span>
+                            <span class="star-icon">☆</span>
+                            <span class="star-icon">☆</span>
+                            <span class="star-icon">☆</span>& Up</a>
+                            </div>
+                            <div>
+                            <a href="/getprofileonrating?min_rating=1&max_rating=2"><span class="star-icon full">☆</span>
+                            <span class="star-icon">☆</span>
+                            <span class="star-icon">☆</span>
+                            <span class="star-icon">☆</span>
+                            <span class="star-icon">☆</span>& Up</a>
+                            </div><br>
+							<li><span class="icon-chevron-right"></span>State</li>
+							<form action = " {% url 'getprofileonstate'%}" class="form-horizontal" name="searchByState" method = "post">
+                                {% csrf_token %}
+                               <select name="stateName" style="margin: 5px;width: 120px;">
+                                    <option value="" >Select </option>
+                                    {% for sname in states %}
+                                        <option value="{{ sname }}"> {{ sname }} </option>
+                                    {% endfor %}
+							    </select>
+                                <input type="submit" value="Go"></input><br><br>
+                             </form>
+                             <li><span class="icon-chevron-right"></span>City</li>
+                              <form action = "{% url 'getprofileonicity'%}" class="form-horizontal" name="searchByCity" method = "post">
+                                {% csrf_token %}
+                                <select name="cityName" style="margin: 5px;width: 120px;">
+                                    <option value="" >Select </option>
+                                    {% for cname in cities %}
+                                        <option value="{{ cname }}"> {{ cname }} </option>
+                                    {% endfor %}
+							    </select>
+                                <input type="submit" value="Go"></input>
+                            </form>
+
+						</div>
+						<div class="well well-small alert alert-warning cntr">
+								  <h2>50% Discount</h2>
+								  <p>
+									 only valid for today's online order. <br><a class="defaultBtn" href="#">Click here </a>
+								  </p>
+						</div>
+						<!-- <div class="well well-small" ><a href="#"><img src="{% static "events/assets/img/paypal.jpg" %}" alt="payment method paypal"></a></div> -->
+
+<!-- 							<a class="shopBtn btn-block" href="#">Upcoming services <br><small>Click to view</small></a>
+ -->							<br>
+							<br>
+						</div>
+						<div class="span9">
+						<main>
+						  {% block content %}
+						  {% endblock %}
+						</main>
+					</div>
+				</div>
+			</div>
+
+    <!--
+Footer
+-->
+    <footer class="footer">
+        <div class="row-fluid">
+            <div class="span2">
+                <h5>Your Account</h5>
+                <a href="#">YOUR ACCOUNT</a><br>
+                <a href="#">PERSONAL INFORMATION</a><br>
+                <a href="#">ADDRESSES</a><br>
+                <a href="#">DISCOUNT</a><br>
+            </div>
+            <div class="span2">
+                <h5>Information</h5>
+                <a href="contact.html">CONTACT</a><br>
+                <!--<a href="#">SITEMAP</a><br>-->
+                <a href="#">LEGAL NOTICE</a><br>
+                <a href="#">TERMS AND CONDITIONS</a><br>
+                <a href="#">ABOUT US</a><br>
+            </div>
+             <!-- <div class="span2">
+                <h5>Our Offer</h5>
+                <a href="#">NEW PRODUCTS</a> <br>
+                <a href="#">TOP SELLERS</a><br>
+                <a href="#">SPECIALS</a><br>
+                <a href="#">MANUFACTURERS</a><br>
+                <a href="#">SUPPLIERS</a> <br/>
+            </div>  -->
+            <div class="span6">
+                <h5>Today's Thought</h5>
+                Focus on the journey, not the destination. Joy is found not in finishing an activity but in doing it.
+                <br>- Greg Anderson
+            </div>
+        </div>
+    </footer>
+</div>
+<div class="copyright">
+    <div class="container" style="text-align:center; margin-top:5px;">
+        <!-- <p class="pull-right">
+            <a href="#"><img src="{% static "events/assets/img/maestro.png" %}" alt="payment"></a>
+            <a href="#"><img src="{% static "events/assets/img/mc.png" %}" alt="payment"></a>
+            <a href="#"><img src="{% static "events/assets/img/pp.png" %}" alt="payment"></a>
+            <a href="#"><img src="{% static "events/assets/img/visa.png" %}" alt="payment"></a>
+            <a href="#"><img src="{% static "events/assets/img/disc.png" %}" alt="payment"></a>
+        </p> -->
+        <span>Copyright &copy; 12/17/2017 Event Hamper</span>
+    </div>
+</div>
+<a href="#" class="gotop"><i class="icon-double-angle-up"></i></a>
+<!--</div>-->
+</body>
+</html>
+

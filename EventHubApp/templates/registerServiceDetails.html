@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+{% load static %}
+{% static '' as baseUrl %}
+{% block content %}
+    <ul class="breadcrumb">
+        <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+        <li class="active">Registration</li>
+    </ul>
+    <!--<h3> Registration</h3> -->
+    <!--<hr class="soft"/> -->
+    <div class="well">
+        <script type="text/javascript">
+            function showDescField(name) {
+                if (name == 'Other') document.getElementById('div1').innerHTML = '<label class="control-label" for="file">New Category Name</label><div class="controls"><input type="text" name="newCategory" id="serviceDesc" required/></div>';
+                else document.getElementById('div1').innerHTML = '';
+            }
+
+            function validateForm(form) {
+                var vCategory = document.serviceDetailsForm.category.value;
+                if (vCategory == 'Other') {
+                    var vNewCategory = document.serviceDetailsForm.newCategory.value;
+                }
+                var vSName = document.serviceDetailsForm.sname.value;
+                var vSPrice = document.serviceDetailsForm.sprice.value;
+                var vSType = document.serviceDetailsForm.stype.value;
+                var vSOffer = document.serviceDetailsForm.soffer.value;
+                var vSPackage = document.serviceDetailsForm.spackage.value;
+                var vSDetails = document.serviceDetailsForm.sdetails.value;
+                var vSDesc = document.serviceDetailsForm.sdesc.value;
+                var vSProd = document.serviceDetailsForm.sprod.value;
+                var vSAbout = document.serviceDetailsForm.sabout.value;
+
+                //var clearForm = document.getElementById("serviceDetailsForm");
+
+                var checkValues = [vNewCategory, vSName, vSPrice, vSType, vSOffer, vSPackage, vSDetails, vSDesc, vSProd, vSAbout];
+                var checkNames = ["newCategory", "sname", "sprice", "stype", "soffer", "spackage", "sdetails", "sdesc", "sprod", "sabout"];
+                var fieldNames = ["New Category Name", "Service Name", "Starting Price", "Type", "Offer", "Package", "Service Details", "Product Description", "About Product", "About You"];
+
+                for (i = 0; i < checkValues.length; i++) {
+                    //check for blank
+                    if (checkValues[i].length == 0) {
+                        alert(fieldNames[i] + " cannot be blank. Please Enter " + fieldNames[i] + ".");
+                        document.getElementById(checkNames[i]).focus();
+                        document.getElementById(checkNames[i]).select();
+                        return false;
+                    }
+                    //check for only spaces
+                    if (checkValues[i].replace(/\s/g, '').length == "0") {
+                        alert(fieldNames[i] + " cannot contain only spaces. Please enter correct " + fieldNames[i] + ".");
+                        document.getElementById(checkNames[i]).focus();
+                        document.getElementById(checkNames[i]).select();
+                        return false;
+                    }
+                }
+                //if form is validated successfully clear the form upon submission
+                //clearForm.reset();
+                return true;
+            }
+        </script>
+        <form class="form-horizontal" name="serviceDetailsForm" enctype="multipart/form-data"
+              action="{% url 'saveUserProfile' %}" method="post" onsubmit="return validateForm(this.form)">
+            {% csrf_token %}
+            <div class="well">
+                <div class="control-group">
+                    <label class="control-label">Choose Category <sup>*</sup></label>
+                    <div class="controls">
+                        <select class="span1" name="category" style="width: 150px"
+                                onchange="showDescField(this.options[this.selectedIndex].value)" required>
+                            <option value="">select</option>
+                            {% block FormCategories %}
+                                {% for category in userCategories %}
+                                    <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+                                {% endfor %}
+                            {% endblock %}
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group" id="div1">
+                </div>
+
+
+                <!--<form class="form-horizontal" >-->
+                <!--<h4>Service Details for {{ categoryType }}</h4> -->
+
+                <div class="control-group">
+                    <label class="control-label">Profile Name <sup>*</sup></label>
+                    <div class="controls">
+                        <input type="text" name="profileName" id="profileName" maxlength="25" size="25" required>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="file">Upload Image 1</label>
+                    <div class="controls">
+                        <input type="file" name="pic1" id="pic1">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="file">Upload Image 2</label>
+                    <div class="controls">
+                        <input type="file" name="pic2" id="pic2">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="file">Upload Image 3</label>
+                    <div class="controls">
+                        <input type="file" name="pic3" id="pic3">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="file">Upload Image 4</label>
+                    <div class="controls">
+                        <input type="file" name="pic4" id="pic4">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="file">Upload Image 5</label>
+                    <div class="controls">
+                        <input type="file" name="pic5" id="pic5">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Starting Price<sup>*</sup></label>
+                    <div class="controls">
+                        <input type="text" name="sprice" id="sprice" maxlength="20" size="25"
+                               onkeypress='return event.charCode >= 48 && event.charCode <= 57' required>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Type <sup>*</sup></label>
+                    <div class="controls">
+                        <!--<input type="text" name="stype" id="stype" maxlength="20" size="25" placeholder="service1;service2;service3" required>-->
+                        <textarea name="stype" id="stype" rows="3" cols="30" placeholder="service1;service2;service3"
+                                  required></textarea>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Offer <sup>*</sup></label>
+                    <div class="controls">
+                        <!--<input type="text" name="soffer" id="soffer" maxlength="20" size="25" placeholder="offer1;offer2;offer3" required>-->
+                        <textarea name="soffer" id="soffer" rows="3" cols="30" placeholder="offer1;offer2;offer3"
+                                  required></textarea>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Package <sup>*</sup></label>
+                    <div class="controls">
+                        <!-- <input type="text" name="spackage" id="spackage" maxlength="20" size="25" placeholder="Standard;Delux;Premium" required>-->
+                        <textarea name="spackage" id="spackage" rows="3" cols="30" placeholder="Standard;Delux;Premium"
+                                  required></textarea>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Service Details <sup>*</sup></label>
+                    <div class="controls">
+                        <!-- <input type="text" name="sdetails" id="sdetails" maxlength="20" size="25" required> -->
+                        <textarea name="sdetails" id="sdetails" rows="4" cols="30"
+                                  placeholder="Enter brief description of your service"
+                                  required></textarea>
+                    </div>
+                </div>
+
+
+                <div class="control-group">
+                    <label class="control-label">Product Description <sup>*</sup></label>
+                    <div class="controls">
+                        <!--<input type="text" name="sdesc" id="sdesc" maxlength="20" size="25" required>-->
+                        <textarea name="sdesc" id="sdesc" rows="5" cols="30"
+                                  placeholder="Enter Product details, specifications etc. "
+                                  required></textarea>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">About Product <sup>*</sup></label>
+                    <div class="controls">
+                        <!--<input type="text" name="sprod" id="sprod" maxlength="20" size="25" required>-->
+                        <textarea name="sprod" id="sprod" rows="5" cols="30" placeholder="Describe Product"
+                                  required></textarea>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">About You <sup>*</sup></label>
+                    <div class="controls">
+                        <!--<input type="text" name="sabout" id="sabout" maxlength="20" size="25" required>-->
+                        <textarea name="sabout" id="sabout" rows="5" cols="30" placeholder="Describe about your company"
+                                  required></textarea>
+                    </div>
+                </div>
+
+
+                <div class="control-group">
+                    <div class="controls">
+                        <input type="submit" name="submitRegistration" value="Register"
+                               class="exclusive shopBtn">
+                        <input type="reset" class="exclusive shopBtn" name="ResetButton" value="Reset">
+
+                    </div>
+                </div>
+        </form>
+    </div>
+{% endblock %}
+</div>
+</div>
